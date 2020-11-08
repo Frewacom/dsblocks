@@ -4,21 +4,22 @@
 #include "../util.h"
 #include "battery.h"
 
-#define ICONe                           COL_TITLE "" COL_NORM /* error reading ACSTATEFILE */
-#define ICON0                           COL_SEL "" COL_NORM /* no battery */
-#define ICON1                           COL_SEL "" COL_NORM /* battery low */
-#define ICON2                           COL_SEL "" COL_NORM /* battery intermediate 1 */
-#define ICON3                           COL_SEL "" COL_NORM /* battery intermediate 2 */
-#define ICON4                           COL_SEL "" COL_NORM /* battery full */
-#define ICON5                           COL_SEL "" COL_NORM /* battery charging */
+#define ICONe                           ICON_CRITICAL(" ") /* error reading ACSTATEFILE */
+#define ICON0                           ICON_CRITICAL(" ") /* no battery */
+#define ICON1                           ICON_CRITICAL(" ") /* battery low */
+#define ICON2                           ICON_NORM(" ") /* battery intermediate 1 */
+#define ICON3                           ICON_NORM(" ") /* battery intermediate 2 */
+#define ICON4                           ICON_SUCCESS(" ") /* battery full */
+#define ICON5                           ICON_SUCCESS(" ") /* battery charging */
 
 #define BATC                            10 /* critical level */
 #define BATL                            20 /* low level */
-#define BATP                            40 /* warn to plug in the charger at/below this level */
-#define BATU                            80 /* warn to unplug the charger at/over this level */
+#define BATP                            35 /* warn to plug in the charger at/below this level */
+#define BATU                            95 /* warn to unplug the charger at/over this level */
 
 #define BATCAPFILE                      "/sys/class/power_supply/BAT0/capacity"
 #define ACSTATEFILE                     "/sys/class/power_supply/AC/online"
+#define ADPSTATEFILE                    "/sys/class/power_supply/ADP1/online"
 #define BATCFULLFILE                    "/sys/class/power_supply/BAT0/charge_full"
 #define BATCNOWFILE                     "/sys/class/power_supply/BAT0/charge_now"
 #define BATRATEFILE                     "/sys/class/power_supply/BAT0/current_now"
@@ -46,8 +47,8 @@ batteryu(char *str, int ac)
   }
   /* routine update */
   if (ac == NILL) {
-    if (!readint(ACSTATEFILE, &ac)) {
-      snprintf(str, CMDLENGTH, ICONe "%d%%", bat);
+    if (!readint(ACSTATEFILE, &ac) && !readint(ADPSTATEFILE, &ac)) {
+      snprintf(str, CMDLENGTH, LABEL(ICONe "%d%%"), bat);
       return;
     }
     if (ac) {
@@ -58,21 +59,21 @@ batteryu(char *str, int ac)
         UNNOTIFY("0", "Unplug the charger");
         level = Unplug;
       }
-      snprintf(str, CMDLENGTH, ICON5 "%d%%", bat);
+      snprintf(str, CMDLENGTH, LABEL(ICON5 "%d%%"), bat);
     } else {
       if (bat > BATP) {
         if (level != Normal)
           level = Normal;
         if (bat < BATU)
-          snprintf(str, CMDLENGTH, ICON3 "%d%%", bat);
+          snprintf(str, CMDLENGTH, LABEL(ICON3 "%d%%"), bat);
         else
-          snprintf(str, CMDLENGTH, ICON4 "%d%%", bat);
+          snprintf(str, CMDLENGTH, LABEL(ICON4 "%d%%"), bat);
       } else if (bat > BATL) {
         if (level != Plug) {
           UNNOTIFY("0", "Plug in the charger");
           level = Plug;
         }
-        snprintf(str, CMDLENGTH, ICON2 "%d%%", bat);
+        snprintf(str, CMDLENGTH, LABEL(ICON2 "%d%%"), bat);
       } else {
         if (bat > BATC) {
           if (level != Low) {
@@ -83,7 +84,7 @@ batteryu(char *str, int ac)
           UCNOTIFY("0", "Battery level is critical!");
           level = Critical;
         }
-        snprintf(str, CMDLENGTH, ICON1 "%d%%", bat);
+        snprintf(str, CMDLENGTH, LABEL(ICON1 "%d%%"), bat);
       }
     }
     /* charger plugged in */
@@ -96,7 +97,7 @@ batteryu(char *str, int ac)
       UNNOTIFY("0", "Unplug the charger");
       level = Unplug;
     }
-    snprintf(str, CMDLENGTH, ICON5 "%d%%", bat);
+    snprintf(str, CMDLENGTH, LABEL(ICON5 "%d%%"), bat);
     /* charger plugged out */
   } else {
     if (bat > BATP) {
@@ -104,13 +105,13 @@ batteryu(char *str, int ac)
       if (level != Normal)
         level = Normal;
       if (bat < BATU)
-        snprintf(str, CMDLENGTH, ICON3 "%d%%", bat);
+        snprintf(str, CMDLENGTH, LABEL(ICON3 "%d%%"), bat);
       else
-        snprintf(str, CMDLENGTH, ICON4 "%d%%", bat);
+        snprintf(str, CMDLENGTH, LABEL(ICON4 "%d%%"), bat);
     } else if (bat > BATL) {
       UNNOTIFY("0", "Plug in the charger");
       level = Plug;
-      snprintf(str, CMDLENGTH, ICON2 "%d%%", bat);
+      snprintf(str, CMDLENGTH, LABEL(ICON2 "%d%%"), bat);
     } else {
       if (bat > BATC) {
         if (level != Low) {
@@ -121,7 +122,7 @@ batteryu(char *str, int ac)
         UCNOTIFY("0", "Battery level is critical!");
         level = Critical;
       }
-      snprintf(str, CMDLENGTH, ICON1 "%d%%", bat);
+      snprintf(str, CMDLENGTH, LABEL(ICON1 "%d%%"), bat);
     }
   }
 }

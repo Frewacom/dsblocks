@@ -18,11 +18,16 @@
 
 static Block blocks[] = {
   /* funcu                 funcc                   interval        signal */
-  {  timeu,                NULL,                   1,              10      },
-  {  mailu,                mailc,                  300,            2       },
+  /* {  music,                music,                  0,             11       }, */
+  /* {  news,                 news,                   0,              6       }, */
+  /* {  cputempu,             cputempc,               2,              6       }, */
+  /* {  mailu,                mailc,                  300,            2       }, */
+  /* {  kdeconnect,           kdeconnect,             15,             0       }, */
+  /* {  wifistatus,           wifistatus,             5,              0       }, */
+  /* {  ethernet,             ethernet,               5,              0       }, */
   {  volumeu,              volumec,                0,              1       },
-  {  cputempu,             cputempc,               2,              6       },
-  {  batteryu,             batteryc,               10,             4       },
+  {  batteryu,             batteryc,               5,              4       },
+  {  timeu,                NULL,                   1,              10      },
   {  NULL                                                                  },
 };
 
