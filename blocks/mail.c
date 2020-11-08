@@ -5,11 +5,11 @@
 #include "../util.h"
 #include "mail.h"
 
-#define ICON0                           COL3 "" COL0 /* frozen */
-#define ICON1                           COL4 "" COL0 /* MAILSYNC started */
-#define ICON2                           COL5 "" COL0 /* syncing */
-#define ICON3                           COL1 "" COL0 /* last sync successful */
-#define ICON4                           COL2 "" COL0 /* last sync failed */
+#define ICON0                           COL_SUCCESS "" COL_NORM /* frozen */
+#define ICON1                           COL_SUCCESS_BG "" COL_NORM /* MAILSYNC started */
+#define ICON2                           COL_CRITICAL "" COL_NORM /* syncing */
+#define ICON3                           COL_SEL "" COL_NORM /* last sync successful */
+#define ICON4                           COL_TITLE "" COL_NORM /* last sync failed */
 
 #define NEWMAILDIR                      "/home/ashish/.local/share/mail/iiser/INBOX/new"
 

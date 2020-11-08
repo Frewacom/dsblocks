@@ -1,7 +1,5 @@
 #include "blocks/battery.h"
 #include "blocks/cputemp.h"
-#include "blocks/calendar.h"
-#include "blocks/hotspot.h"
 #include "blocks/mail.h"
 #include "blocks/time.h"
 #include "blocks/volume.h"
@@ -20,9 +18,7 @@
 
 static Block blocks[] = {
   /* funcu                 funcc                   interval        signal */
-  {  hotspotu,             hotspotc,               -1,             3       },
   {  timeu,                NULL,                   1,              10      },
-  {  calendaru,            calendarc,              30,             5       },
   {  mailu,                mailc,                  300,            2       },
   {  volumeu,              volumec,                0,              1       },
   {  cputempu,             cputempc,               2,              6       },
@@ -30,4 +26,4 @@ static Block blocks[] = {
   {  NULL                                                                  },
 };
 
-static const char *delim =  "  ";
+static const char *delim =  " ";

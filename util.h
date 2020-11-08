@@ -1,11 +1,13 @@
 #include "shared.h"
 
-#define COL0                            "" /* default status color */
-#define COL1                            "" /* default icon color */
-#define COL2                            "\r" /* warning icon color */
-#define COL3                            "" /* mail block - frozen */
-#define COL4                            "" /* mail block - MAILSYNC started */
-#define COL5                            "" /* mail block - syncing */
+#define COL_NORM                        "\x0b"
+#define COL_SEL                         "\x0c"
+#define COL_TITLE                       "\x0d"
+#define COL_SUCCESS                     "\x0e"
+#define COL_SUCCESS_BG                  "\x0f"
+#define COL_CRITICAL                    "\x10"
+#define COL_CRITICAL_BG                 "\x11"
+#define ICON(X,C)                       C " " X
 
 #define TERMCMD(cmd)                    cspawn((char *[]){ "/usr/bin/st", "-e", cmd, NULL })
 

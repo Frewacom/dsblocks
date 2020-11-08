@@ -4,13 +4,13 @@
 #include "../util.h"
 #include "battery.h"
 
-#define ICONe                           COL2 "" COL0 /* error reading ACSTATEFILE */
-#define ICON0                           COL1 "" COL0 /* no battery */
-#define ICON1                           COL1 "" COL0 /* battery low */
-#define ICON2                           COL1 "" COL0 /* battery intermediate 1 */
-#define ICON3                           COL1 "" COL0 /* battery intermediate 2 */
-#define ICON4                           COL1 "" COL0 /* battery full */
-#define ICON5                           COL1 "" COL0 /* battery charging */
+#define ICONe                           COL_TITLE "" COL_NORM /* error reading ACSTATEFILE */
+#define ICON0                           COL_SEL "" COL_NORM /* no battery */
+#define ICON1                           COL_SEL "" COL_NORM /* battery low */
+#define ICON2                           COL_SEL "" COL_NORM /* battery intermediate 1 */
+#define ICON3                           COL_SEL "" COL_NORM /* battery intermediate 2 */
+#define ICON4                           COL_SEL "" COL_NORM /* battery full */
+#define ICON5                           COL_SEL "" COL_NORM /* battery charging */
 
 #define BATC                            10 /* critical level */
 #define BATL                            20 /* low level */
