@@ -9,5 +9,5 @@ timeu(char *str, int sigval)
   time_t t = time(NULL);
   struct tm tm = *localtime(&t);
 
-  strftime(str, CMDLENGTH, LABEL(ICON_EMPTY "%A, %d %b (w.%W) %T"), &tm);
+  strftime(str, CMDLENGTH, BLOCK_NORM(NO_ICON, "%A, %d %b (w.%W) %T"), &tm);
 }

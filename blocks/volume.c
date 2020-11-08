@@ -3,14 +3,14 @@
 #include "../util.h"
 #include "volume.h"
 
-#define ICON0                           COL_SEL "" COL_NORM
-#define ICON1                           COL_SEL "" COL_NORM
+#define ICON0                           ""
+#define ICON1                           ""
 
 #define BUFLENGTH                       10
 
 #define PAMIXER                         (char *[]){ "/usr/bin/pamixer", "--get-mute", "--get-volume", NULL }
 
-#define PAVUCONTROL                     (char *[]){ "/usr/bin/pavucontrol-qt", NULL }
+#define PAVUCONTROL                     (char *[]){ "/usr/bin/pulsemixer", NULL }
 #define SETDEFAULTVOL                   (char *[]){ "/usr/bin/pamixer", "--set-volume", "50", NULL }
 #define TOGGLEMUTE                      (char *[]){ "/usr/bin/pamixer", "--toggle-mute", NULL }
 
@@ -21,9 +21,9 @@ volumeu(char *str, int sigval)
 
   buf[getcmdout(PAMIXER, buf, BUFLENGTH) - 1] = '\0';
   if (buf[0] == 'f') /* output was `false <volume>' */
-    snprintf(str, CMDLENGTH, ICON0 "%s%%", buf + 6);
+    snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON0), "%s%%"), buf + 6);
   else /* output was `true <volume>' */
-    snprintf(str, CMDLENGTH, ICON1 "%s%%", buf + 5);
+    snprintf(str, CMDLENGTH, BLOCK_CRITICAL(ICON(ICON1), "%s%%"), buf + 5);
 }
 
 void
