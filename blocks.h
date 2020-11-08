@@ -20,14 +20,19 @@
 
 static Block blocks[] = {
   /* funcu                 funcc                   interval        signal */
-  {  hotspotu,             hotspotc,               -1,             3       },
-  {  timeu,                NULL,                   1,              10      },
-  {  calendaru,            calendarc,              30,             5       },
-  {  mailu,                mailc,                  300,            2       },
+  /* {  music,                music,                  0,             11       }, */
+  /* {  news,                 news,                   0,              6       }, */
+  /* {  cputempu,             cputempc,               2,              6       }, */
+  /* {  batteryu,             batteryc,               10,             4       }, */
+  /* {  hotspotu,             hotspotc,               -1,             3       }, */
+  /* {  mailu,                mailc,                  300,            2       }, */
+  /* {  kdeconnect,           kdeconnect,             15,             0       }, */
+  /* {  wifistatus,           wifistatus,             5,              0       }, */
+  /* {  ethernet,             ethernet,               5,              0       }, */
+  {  batteryu,             batteryc,               5,              4       },
   {  volumeu,              volumec,                0,              1       },
-  {  cputempu,             cputempc,               2,              6       },
-  {  batteryu,             batteryc,               10,             4       },
+  {  calendaru,            calendarc,              30,             5       },
   {  NULL                                                                  },
 };
 
-static const char *delim =  "  ";
+static const char *delim = "  ";

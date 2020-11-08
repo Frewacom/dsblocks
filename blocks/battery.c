@@ -4,21 +4,22 @@
 #include "../util.h"
 #include "battery.h"
 
-#define ICONe                           COL2 "" COL0 /* error reading ACSTATEFILE */
-#define ICON0                           COL1 "" COL0 /* no battery */
-#define ICON1                           COL1 "" COL0 /* battery low */
-#define ICON2                           COL1 "" COL0 /* battery intermediate 1 */
-#define ICON3                           COL1 "" COL0 /* battery intermediate 2 */
-#define ICON4                           COL1 "" COL0 /* battery full */
-#define ICON5                           COL1 "" COL0 /* battery charging */
+#define ICONe                           COL2 " " /* error reading ACSTATEFILE */
+#define ICON0                           COL1 " " /* no battery */
+#define ICON1                           COL1 " " /* battery low */
+#define ICON2                           COL1 " " /* battery intermediate 1 */
+#define ICON3                           COL1 " " /* battery intermediate 2 */
+#define ICON4                           COL1 " " /* battery full */
+#define ICON5                           COL1 " " /* battery charging */
 
 #define BATC                            10 /* critical level */
 #define BATL                            20 /* low level */
-#define BATP                            40 /* warn to plug in the charger at/below this level */
-#define BATU                            80 /* warn to unplug the charger at/over this level */
+#define BATP                            35 /* warn to plug in the charger at/below this level */
+#define BATU                            95 /* warn to unplug the charger at/over this level */
 
 #define BATCAPFILE                      "/sys/class/power_supply/BAT0/capacity"
 #define ACSTATEFILE                     "/sys/class/power_supply/AC/online"
+#define ADPSTATEFILE                    "/sys/class/power_supply/ADP1/online"
 #define BATCFULLFILE                    "/sys/class/power_supply/BAT0/charge_full"
 #define BATCNOWFILE                     "/sys/class/power_supply/BAT0/charge_now"
 #define BATRATEFILE                     "/sys/class/power_supply/BAT0/current_now"
@@ -46,7 +47,7 @@ batteryu(char *str, int ac)
   }
   /* routine update */
   if (ac == NILL) {
-    if (!readint(ACSTATEFILE, &ac)) {
+    if (!readint(ACSTATEFILE, &ac) && !readint(ADPSTATEFILE, &ac)) {
       snprintf(str, CMDLENGTH, ICONe "%d%%", bat);
       return;
     }
