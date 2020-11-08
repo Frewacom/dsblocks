@@ -5,7 +5,7 @@
 #include "battery.h"
 
 #define ICONC                           "" /* error reading ACSTATEFILE */
-#define ICON0                           "" /* no battery */
+#define ICON0                           "" /* no battery */
 #define ICON1                           "" /* battery low */
 #define ICON2                           "" /* battery intermediate 1 */
 #define ICON3                           "" /* battery intermediate 2 */
