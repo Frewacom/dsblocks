@@ -13,30 +13,30 @@
 void
 cputempu(char *str, int sigval)
 {
-        int temp;
+  int temp;
 
-        if (!readint(CPUTEMPFILE, &temp)) {
-                *str = '\0';
-                return;
-        }
-        if (temp < WARNCPUTEMP)
-                snprintf(str, CMDLENGTH, ICON0 "%d°C", (temp + 999) / 1000);
-        else
-                snprintf(str, CMDLENGTH, ICON1 "%d°C", (temp + 999) / 1000);
+  if (!readint(CPUTEMPFILE, &temp)) {
+    *str = '\0';
+    return;
+  }
+  if (temp < WARNCPUTEMP)
+    snprintf(str, CMDLENGTH, ICON0 "%d°C", (temp + 999) / 1000);
+  else
+    snprintf(str, CMDLENGTH, ICON1 "%d°C", (temp + 999) / 1000);
 }
 
 void
 cputempc(int button)
 {
-        switch (button) {
-                case 1:
-                        TERMCMD("/usr/bin/htop -s PERCENT_CPU");
-                        break;
-                case 2:
-                        TERMCMD("/usr/bin/htop");
-                        break;
-                case 3:
-                        TERMCMD("/usr/bin/htop -s PERCENT_MEM");
-                        break;
-        }
+  switch (button) {
+    case 1:
+      TERMCMD("/usr/bin/htop -s PERCENT_CPU");
+      break;
+    case 2:
+      TERMCMD("/usr/bin/htop");
+      break;
+    case 3:
+      TERMCMD("/usr/bin/htop -s PERCENT_MEM");
+      break;
+  }
 }

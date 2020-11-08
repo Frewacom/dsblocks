@@ -10,14 +10,14 @@
 void
 calendaru(char *str, int sigval)
 {
-        time_t t = time(NULL);
-        struct tm tm = *localtime(&t);
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
 
-        strftime(str, CMDLENGTH, ICON "%a, %d %b", &tm);
+  strftime(str, CMDLENGTH, ICON "%a %d %b (w.%V) %T", &tm);
 }
 
 void
 calendarc(int button)
 {
-        cspawn(SHOWCALCURSE);
+  cspawn(SHOWCALCURSE);
 }

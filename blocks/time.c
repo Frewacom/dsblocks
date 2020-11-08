@@ -8,8 +8,8 @@
 void
 timeu(char *str, int sigval)
 {
-        time_t t = time(NULL);
-        struct tm tm = *localtime(&t);
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
 
-        strftime(str, CMDLENGTH, ICON "%R", &tm);
+  strftime(str, CMDLENGTH, ICON "%T", &tm);
 }

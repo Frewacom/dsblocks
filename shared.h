@@ -1,7 +1,7 @@
 #include <limits.h>
 #include <X11/Xlib.h>
 
-#define CMDLENGTH                       25
+#define CMDLENGTH                       75
 #define NILL                            INT_MIN
 
 extern Display *dpy;

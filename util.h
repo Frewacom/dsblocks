@@ -7,7 +7,7 @@
 #define COL4                            "" /* mail block - MAILSYNC started */
 #define COL5                            "" /* mail block - syncing */
 
-#define TERMCMD(cmd)                    cspawn((char *[]){ "/usr/bin/termite", "-e", cmd, NULL })
+#define TERMCMD(cmd)                    cspawn((char *[]){ "/usr/bin/st", "-e", cmd, NULL })
 
 void cspawn(char *const *arg);
 void csigself(int signal, int sigval);

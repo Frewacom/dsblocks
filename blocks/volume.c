@@ -17,27 +17,27 @@
 void
 volumeu(char *str, int sigval)
 {
-        char buf[BUFLENGTH];
+  char buf[BUFLENGTH];
 
-        buf[getcmdout(PAMIXER, buf, BUFLENGTH) - 1] = '\0';
-        if (buf[0] == 'f') /* output was `false <volume>' */
-                snprintf(str, CMDLENGTH, ICON0 "%s%%", buf + 6);
-        else /* output was `true <volume>' */
-                snprintf(str, CMDLENGTH, ICON1 "%s%%", buf + 5);
+  buf[getcmdout(PAMIXER, buf, BUFLENGTH) - 1] = '\0';
+  if (buf[0] == 'f') /* output was `false <volume>' */
+    snprintf(str, CMDLENGTH, ICON0 "%s%%", buf + 6);
+  else /* output was `true <volume>' */
+    snprintf(str, CMDLENGTH, ICON1 "%s%%", buf + 5);
 }
 
 void
 volumec(int button)
 {
-        switch(button) {
-                case 1:
-                        cspawn(TOGGLEMUTE);
-                        break;
-                case 2:
-                        cspawn(SETDEFAULTVOL);
-                        break;
-                case 3:
-                        cspawn(PAVUCONTROL);
-                        break;
-        }
+  switch(button) {
+    case 1:
+      cspawn(TOGGLEMUTE);
+      break;
+    case 2:
+      cspawn(SETDEFAULTVOL);
+      break;
+    case 3:
+      cspawn(PAVUCONTROL);
+      break;
+  }
 }

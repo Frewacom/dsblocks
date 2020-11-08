@@ -1,5 +1,3 @@
-#define SLEEPINTERVAL                   2
-
 #include "blocks/battery.h"
 #include "blocks/cputemp.h"
 #include "blocks/calendar.h"
@@ -7,6 +5,8 @@
 #include "blocks/mail.h"
 #include "blocks/time.h"
 #include "blocks/volume.h"
+
+#define SLEEPINTERVAL                   1
 
 /* If interval of a block is set to 0, the block will only be updated once at startup.
  * If interval is set to a negative value, the block will never be updated in the main loop.
@@ -19,22 +19,15 @@
  * funcc - function responsible for handling clicks on the block */
 
 static Block blocks[] = {
-/*      funcu                   funcc                   interval        signal */
-        { hotspotu,             hotspotc,               -1,             3 },
-
-        { timeu,                NULL,                   30,             10 },
-
-        { calendaru,            calendarc,              30,             5 },
-
-        { mailu,                mailc,                  300,            2 },
-
-        { volumeu,              volumec,                0,              1 },
-
-        { cputempu,             cputempc,               2,              6 },
-
-        { batteryu,             batteryc,               10,             4 },
-
-        { NULL } /* just to mark the end of the array */
+  /* funcu                 funcc                   interval        signal */
+  {  hotspotu,             hotspotc,               -1,             3       },
+  {  timeu,                NULL,                   1,              10      },
+  {  calendaru,            calendarc,              30,             5       },
+  {  mailu,                mailc,                  300,            2       },
+  {  volumeu,              volumec,                0,              1       },
+  {  cputempu,             cputempc,               2,              6       },
+  {  batteryu,             batteryc,               10,             4       },
+  {  NULL                                                                  },
 };
 
-static const char *delim =  "   ";
+static const char *delim =  "  ";

@@ -10,14 +10,14 @@
 void
 hotspotu(char *str, int sigval)
 {
-        if (sigval == 1)
-                strcpy(str, ICON);
-        else if (sigval == 0)
-                *str = '\0';
+  if (sigval == 1)
+    strcpy(str, ICON);
+  else if (sigval == 0)
+    *str = '\0';
 }
 
 void
 hotspotc(int button)
 {
-        cspawn(TURNOFFHOTSPOT);
+  cspawn(TURNOFFHOTSPOT);
 }
