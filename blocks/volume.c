@@ -10,7 +10,7 @@
 
 #define PAMIXER                         (char *[]){ "/usr/bin/pamixer", "--get-mute", "--get-volume", NULL }
 
-#define PAVUCONTROL                     (char *[]){ "/usr/bin/pulsemixer", NULL }
+#define PULSEMIXER                      (char *[]){ "/usr/bin/pulsemixer", NULL }
 #define SETDEFAULTVOL                   (char *[]){ "/usr/bin/pamixer", "--set-volume", "50", NULL }
 #define TOGGLEMUTE                      (char *[]){ "/usr/bin/pamixer", "--toggle-mute", NULL }
 
@@ -37,7 +37,7 @@ volumec(int button)
       cspawn(SETDEFAULTVOL);
       break;
     case 3:
-      cspawn(PAVUCONTROL);
+      cspawn(PULSEMIXER);
       break;
   }
 }

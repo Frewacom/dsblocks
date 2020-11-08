@@ -18,17 +18,17 @@
 
 static Block blocks[] = {
   /* funcu                 funcc                   interval        signal */
-  /* {  music,                music,                  0,             11       }, */
+  /* {  music,                music,                  0,              9       }, */
   /* {  news,                 news,                   0,              6       }, */
   /* {  cputempu,             cputempc,               2,              6       }, */
-  /* {  mailu,                mailc,                  300,            2       }, */
+  /* {  mailu,                mailc,                  300,            5       }, */
   /* {  kdeconnect,           kdeconnect,             15,             0       }, */
   /* {  wifistatus,           wifistatus,             5,              0       }, */
   /* {  ethernet,             ethernet,               5,              0       }, */
   {  volumeu,              volumec,                0,              1       },
   {  batteryu,             batteryc,               5,              4       },
-  {  timeu,                NULL,                   1,              10      },
+  {  timeu,                timec,                  1,              3      },
   {  NULL                                                                  },
 };
 
-static const char *delim =  " ";
+static const char *delim = " ";

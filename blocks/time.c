@@ -3,6 +3,8 @@
 #include "../util.h"
 #include "time.h"
 
+/* #define SHOWCALENDAR */
+
 void
 timeu(char *str, int sigval)
 {
@@ -10,4 +12,10 @@ timeu(char *str, int sigval)
   struct tm tm = *localtime(&t);
 
   strftime(str, CMDLENGTH, BLOCK_NORM(NO_ICON, "%A, %d %b (w.%W) %T"), &tm);
+}
+
+void
+timec(int button)
+{
+  /* TERMCMD(SHOWCALENDAR); */
 }
