@@ -8,14 +8,14 @@
 #define COL_CRITICAL                    "\x10"
 #define COL_CRITICAL_BG                 "\x11"
 
-#define LABEL(X)                        X COL_NORM
-#define ICON_EMPTY                      " "
-#define ICON(C1,X,C2)                   C1 " " X C2
-#define ICON_NORM(X)                    ICON(COL_NORM, X, COL_NORM)
-#define ICON_SUCCESS(X)                 ICON(COL_SUCCESS, X, COL_SUCCESS)
-#define ICON_CRITICAL(X)                ICON(COL_CRITICAL, X, COL_CRITICAL)
-#define ICON_SUCCESS_BG(X)              ICON(COL_SUCCESS_BG, X, COL_SUCCESS_BG)
-#define ICON_CRITICAL_BG(X)             ICON(COL_CRITICAL_BG, X, COL_CRITICAL_BG)
+#define NO_ICON                         ""
+#define ICON(I)                         I " "
+#define BLOCK(C1,I,C2,L)                C1 " " I C2 L
+#define BLOCK_NORM(I,L)                 BLOCK(COL_NORM, I, COL_NORM, L)
+#define BLOCK_SUCCESS(I,L)              BLOCK(COL_SUCCESS, I, COL_SUCCESS, L)
+#define BLOCK_CRITICAL(I,L)             BLOCK(COL_CRITICAL, I, COL_CRITICAL, L)
+#define BLOCK_SUCCESS_BG(I,L)           BLOCK(COL_SUCCESS_BG, I, COL_SUCCESS_BG, L)
+#define BLOCK_CRITICAL_BG(I,L)          BLOCK(COL_CRITICAL_BG, I, COL_CRITICAL_BG, L)
 
 #define TERMCMD(cmd)                    cspawn((char *[]){ "/usr/bin/st", "-e", cmd, NULL })
 
