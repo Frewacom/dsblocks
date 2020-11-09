@@ -31,7 +31,7 @@ volumeu(char *str, int sigval)
 void
 volumec(int button)
 {
-  csigself(1,0);
+  csigself(1,1);
   switch(button) {
     case 1:
       cspawn(TOGGLEMUTE);

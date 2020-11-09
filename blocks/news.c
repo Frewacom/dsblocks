@@ -13,12 +13,18 @@ newsu(char *str, int sigval)
   int unread;
   if (readint(UNREADPATH, &unread)) {
     snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON0), "%d"), unread);
-    return;
   }
 }
 
 void
 newsc(int button)
 {
-  TERMCMD("newsboat");
+  switch (button){
+    case 1:
+      TERMCMD("newsboat");
+      break;
+    case 2:
+      TERMCMD("newsup");
+      break;
+  }
 }
