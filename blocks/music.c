@@ -1,7 +1,5 @@
 #include <mpd/client.h>
-#include <mpd/connection.h>
 #include <stdio.h>
-#include <assert.h>
 #include "../util.h"
 #include "music.h"
 
