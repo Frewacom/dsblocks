@@ -12,6 +12,8 @@
 
 #define PULSEMIXER                      (char *[]){ "/usr/bin/pulsemixer", NULL }
 #define SETDEFAULTVOL                   (char *[]){ "/usr/bin/pamixer", "--set-volume", "50", NULL }
+#define INCREASEVOL                     (char *[]){ "/usr/bin/pamixer", "--increase", "3", NULL }
+#define DECREASEVOL                     (char *[]){ "/usr/bin/pamixer", "--decrease", "3", NULL }
 #define TOGGLEMUTE                      (char *[]){ "/usr/bin/pamixer", "--toggle-mute", NULL }
 
 void
@@ -29,6 +31,7 @@ volumeu(char *str, int sigval)
 void
 volumec(int button)
 {
+  csigself(1,0);
   switch(button) {
     case 1:
       cspawn(TOGGLEMUTE);
@@ -37,7 +40,13 @@ volumec(int button)
       cspawn(SETDEFAULTVOL);
       break;
     case 3:
-      cspawn(PULSEMIXER);
+      /* cspawn(PULSEMIXER); */
+      break;
+    case 4:
+      cspawn(DECREASEVOL);
+      break;
+    case 5:
+      cspawn(INCREASEVOL);
       break;
   }
 }
