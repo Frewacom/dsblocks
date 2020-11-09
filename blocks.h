@@ -1,5 +1,6 @@
 #include "blocks/battery.h"
 #include "blocks/cputemp.h"
+#include "blocks/news.h"
 #include "blocks/mail.h"
 #include "blocks/time.h"
 #include "blocks/volume.h"
@@ -19,7 +20,7 @@
 static Block blocks[] = {
   /* funcu                 funcc                   interval        signal */
   /* {  music,                music,                  0,              9       }, */
-  /* {  news,                 news,                   0,              6       }, */
+  {  newsu,                newsc,                  5,              6       },
   /* {  cputempu,             cputempc,               2,              6       }, */
   /* {  mailu,                mailc,                  300,            5       }, */
   /* {  kdeconnect,           kdeconnect,             15,             0       }, */
