@@ -42,7 +42,7 @@ batteryu(char *str, int ac)
   int bat;
 
   if (!readint(BATCAPFILE, &bat)) {
-    strcpy(str, BLOCK_CRITICAL(ICON(ICON0), ""));
+    strcpy(str, BLOCK_CRITICAL(ICON0, ""));
     return;
   }
   /* routine update */
