@@ -56,8 +56,7 @@ batteryu(char *str, int ac)
         if (level != Normal)
           level = Normal;
       } else if (level != Unplug) {
-        UNNOTIFY("0", "Unplug the charger");
-        level = Unplug;
+          level = Unplug;
       }
       snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON5), "%d%%"), bat);
     } else {
@@ -70,18 +69,15 @@ batteryu(char *str, int ac)
           snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON4), "%d%%"), bat);
       } else if (bat > BATL) {
         if (level != Plug) {
-          UNNOTIFY("0", "Plug in the charger");
           level = Plug;
         }
         snprintf(str, CMDLENGTH, BLOCK_CRITICAL(ICON(ICON2), "%d%%"), bat);
       } else {
         if (bat > BATC) {
           if (level != Low) {
-            UNNOTIFY("0", "Battery level is low!");
             level = Low;
           }
         } else if (level != Critical) {
-          UCNOTIFY("0", "Battery level is critical!");
           level = Critical;
         }
         snprintf(str, CMDLENGTH, BLOCK_CRITICAL(ICON(ICON1), "%d%%"), bat);
@@ -90,18 +86,15 @@ batteryu(char *str, int ac)
     /* charger plugged in */
   } else if (ac) {
     if (bat < BATU) {
-      UNNOTIFY("1000", "Charger plugged in");
       if (level != Normal)
         level = Normal;
     } else {
-      UNNOTIFY("0", "Unplug the charger");
       level = Unplug;
     }
     snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON5), "%d%%"), bat);
     /* charger plugged out */
   } else {
     if (bat > BATP) {
-      UNNOTIFY("1000", "Charger plugged out");
       if (level != Normal)
         level = Normal;
       if (bat < BATU)
@@ -109,17 +102,14 @@ batteryu(char *str, int ac)
       else
         snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON4), "%d%%"), bat);
     } else if (bat > BATL) {
-      UNNOTIFY("0", "Plug in the charger");
       level = Plug;
       snprintf(str, CMDLENGTH, BLOCK_CRITICAL(ICON(ICON2), "%d%%"), bat);
     } else {
       if (bat > BATC) {
         if (level != Low) {
-          UNNOTIFY("0", "Battery level is low!");
           level = Low;
         }
       } else if (level != Critical) {
-        UCNOTIFY("0", "Battery level is critical!");
         level = Critical;
       }
       snprintf(str, CMDLENGTH, BLOCK_CRITICAL(ICON(ICON1), "%d%%"), bat);
@@ -134,33 +124,27 @@ batteryc(int button)
   int cur, rate;
   int hr, mn;
 
-  if (!readint(ACSTATEFILE, &ac)) {
-    CCNOTIFY("0", "Couldn't read " ACSTATEFILE);
+  if (!readint(ACSTATEFILE, &ac) && !readint(ADPSTATEFILE, &ac)) {
     return;
   }
   if (ac) {
     int cnow;
 
     if (!readint(BATCFULLFILE, &cur)) {
-      CCNOTIFY("0", "Couldn't read " BATCFULLFILE);
       return;
     }
     if (!readint(BATCNOWFILE, &cnow)) {
-      CCNOTIFY("0", "Couldn't read " BATCNOWFILE);
       return;
     }
     cur -= cnow;
   } else
     if (!readint(BATCNOWFILE, &cur)) {
-      CCNOTIFY("0", "Couldn't read " BATCNOWFILE);
       return;
     }
   if (!readint(BATRATEFILE, &rate)) {
-    CCNOTIFY("0", "Couldn't read " BATRATEFILE);
     return;
   }
   if (!rate) {
-    CNNOTIFY("2000", "Battery fully charged");
     return;
   }
   hr = cur / rate;

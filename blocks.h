@@ -29,7 +29,7 @@ static Block blocks[] = {
   /* {  ethernet,             ethernet,               5,              0       }, */
   {  volumeu,              volumec,                0,              1       },
   {  batteryu,             batteryc,               5,              4       },
-  {  timeu,                timec,                  1,              3      },
+  {  timeu,                timec,                  1,              3       },
   {  NULL                                                                  },
 };
 
