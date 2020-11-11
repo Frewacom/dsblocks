@@ -14,6 +14,9 @@ newsu(char *str, int sigval)
   if (readint(UNREADPATH, &unread)) {
     snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON0), "%d"), unread);
   }
+  else {
+    snprintf(str, CMDLENGTH, "");
+  }
 }
 
 void
