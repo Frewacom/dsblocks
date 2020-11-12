@@ -3,8 +3,8 @@ PREFIX := /usr/local
 CC := gcc
 CFLAGS := -O3 -Wall -Wextra
 
-X11CFLAGS := $(shell pkg-config --cflags x11)
-X11LIBS := $(shell pkg-config --libs x11)
+X11CFLAGS := $(shell pkg-config --cflags x11 gio-2.0)
+X11LIBS := $(shell pkg-config --libs x11 gio-2.0)
 
 BLOCKS := $(wildcard blocks/*.c)
 
@@ -18,6 +18,9 @@ util.o: util.c util.h shared.h
 
 blocks/%.o: blocks/%.c blocks/%.h util.h shared.h
 	${CC} -o $@ -c ${CFLAGS} -Wno-unused-parameter $<
+
+blocks/kdeconnect.o: blocks/kdeconnect.c blocks/kdeconnect.h util.h shared.h
+	${CC} -o $@ -c ${CFLAGS} -Wno-unused-parameter $< ${X11CFLAGS} ${X11LIBS}
 
 dsblocks: dsblocks.o util.o ${BLOCKS:c=o}
 	${CC} -o $@ $^ ${X11LIBS}

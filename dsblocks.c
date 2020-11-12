@@ -273,7 +273,7 @@ writepid()
   }
 }
 
-  int
+int
 main(int argc, char *argv[])
 {
   pid = getpid();
