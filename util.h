@@ -19,6 +19,7 @@
 
 #define TERMCMD(cmd)                    cspawn((char *[]){ "/usr/bin/st", "-e", cmd, NULL })
 
+void print_empty(char *str);
 void cspawn(char *const *arg);
 void csigself(int signal, int sigval);
 ssize_t getcmdout(char *const *arg, char *cmdout, size_t cmdoutlen);

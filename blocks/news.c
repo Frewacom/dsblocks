@@ -15,7 +15,7 @@ newsu(char *str, int sigval)
     snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON0), "%d"), unread);
   }
   else {
-    snprintf(str, CMDLENGTH, "");
+    print_empty(str);
   }
 }
 

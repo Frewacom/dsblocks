@@ -89,26 +89,17 @@ kdeconnectu(char *str, int sigval)
   GError *error = NULL;
   GDBusConnection *connection = g_bus_get_sync(G_BUS_TYPE_SESSION, NULL, NULL);
 
-  if (connection != NULL) {
-    if (isreachable(connection, error)) {
-      gint32 charge = getbattery(connection, error);
-
-      if (charge > -1) {
-        snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON0), "%d%%"), charge);
-      } else {
-        snprintf(str, CMDLENGTH, "");
-      }
-    } else {
-      snprintf(str, CMDLENGTH, "");
-    }
-
-    /* g_dbus_connection_close_sync(connection, NULL, NULL); */
+  if (connection != NULL && isreachable(connection, error)) {
+    gint32 charge = getbattery(connection, error);
+    snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON0), "%d%%"), charge);
   } else {
-    snprintf(str, CMDLENGTH, "");
+    print_empty(str);
   }
 
   if (error != NULL)
     g_error_free(error);
+
+  g_object_unref(connection);
 }
 
 void
