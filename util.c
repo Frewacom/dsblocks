@@ -6,7 +6,7 @@
 #include "util.h"
 
 void
-print_empty(char *str)
+printempty(char *str)
 {
   *str = '\0';
 }

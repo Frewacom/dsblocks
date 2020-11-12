@@ -6,7 +6,7 @@
 #define ICON0               ""
 
 void
-musicu(char *str, int sigval)
+musicu(char *str, int sigval, XrmDatabase db)
 {
   /* struct mpd_connection *conn = mpd_connection_new(NULL, 0, 0); */
   /* struct mpd_song *song = mpd_run_current_song(conn); */

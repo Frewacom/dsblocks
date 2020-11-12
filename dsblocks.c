@@ -6,6 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <X11/Xlib.h>
+#include <X11/Xresource.h>
 
 #include "shared.h"
 
@@ -13,7 +14,7 @@
 #define LOCKFILE                        "/tmp/dsblocks.pid"
 
 typedef struct {
-  void (*funcu)(char *str, int sigval);
+  void (*funcu)(char *str, int sigval, XrmDatabase db);
   void (*funcc)(int button);
   const int interval;
   const int signal;
@@ -34,6 +35,7 @@ static void writepid();
 
 Display *dpy;
 pid_t pid;
+XrmDatabase db;
 
 static int statuscontinue = 1;
 static char statusstr[STTLENGTH];
@@ -113,7 +115,7 @@ sighandler(int signal, siginfo_t *si, void *ucontext)
   signal -= SIGRTMIN;
   for (Block *current = blocks; current->funcu; current++)
     if (current->signal == signal)
-      current->funcu(current->cmdoutcur, si->si_value.sival_int);
+      current->funcu(current->cmdoutcur, si->si_value.sival_int, db);
   setroot();
 }
 
@@ -126,7 +128,7 @@ statusloop()
   sigprocmask(SIG_BLOCK, &blocksigmask, NULL);
   for (Block *current = blocks; current->funcu; current++)
     if (current->interval >= 0)
-      current->funcu(current->cmdoutcur, NILL);
+      current->funcu(current->cmdoutcur, NILL, db);
   setroot();
   sigprocmask(SIG_UNBLOCK, &blocksigmask, NULL);
   sleep(SLEEPINTERVAL);
@@ -136,7 +138,7 @@ statusloop()
     sigprocmask(SIG_BLOCK, &blocksigmask, NULL);
     for (Block *current = blocks; current->funcu; current++)
       if (current->interval > 0 && i % current->interval == 0)
-        current->funcu(current->cmdoutcur, NILL);
+        current->funcu(current->cmdoutcur, NILL, db);
     setroot();
     sigprocmask(SIG_UNBLOCK, &blocksigmask, NULL);
     sleep(SLEEPINTERVAL);
@@ -151,7 +153,7 @@ termhandler(int signum)
 }
 
 /* returns whether block outputs have changed and updates statusstr if they have */
-  int
+int
 updatestatus()
 {
   char *s = statusstr;
@@ -273,6 +275,19 @@ writepid()
   }
 }
 
+void
+setupxresources() {
+  char *manager = XResourceManagerString(dpy);
+  if (manager == NULL) {
+    fprintf(stderr, "Can't obtain RESOURCE_MANAGER\n");
+  }
+
+  db = XrmGetStringDatabase(manager);
+  if (db == NULL) {
+    fprintf(stderr, "Can't open resource database\n");
+  }
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -286,6 +301,7 @@ main(int argc, char *argv[])
     fputs("Error: could not open display.\n", stderr);
     return 1;
   }
+  setupxresources();
   sigemptyset(&blocksigmask);
   sigaddset(&blocksigmask, SIGHUP);
   sigaddset(&blocksigmask, SIGINT);

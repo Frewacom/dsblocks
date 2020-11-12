@@ -6,24 +6,29 @@
 #include "../util.h"
 
 #define ICON0                           ""
+#define RESOURCE_ID                     "kde.deviceId"
+#define DEVICE_ID_LENGTH                17
 
 #define PROPERTY_BUS_INTERFACE          "org.freedesktop.DBus.Properties"
 #define PROPERTY_BUS_METHOD             "Get"
 
 #define TARGET_BUS_NAME                 "org.kde.kdeconnect"
-#define TARGET_BUS_OBJECT               "/modules/kdeconnect/devices/5b47b4994b69f3fc"
+#define TARGET_BUS_OBJECT               "/modules/kdeconnect/devices/"
 #define TARGET_BUS_DEVICE_INTERFACE     "org.kde.kdeconnect.device"
 #define TARGET_BUS_BATTERY_INTERFACE    "org.kde.kdeconnect.device.battery"
 #define TARGET_BUS_ISREACHABLE          "isReachable"
 #define TARGET_BUS_BATTERY              "charge"
 
+static gboolean isreachable(GDBusConnection *connection, GError *error, const char *obj);
+static gint32 getbattery(GDBusConnection *connection, GError *error, const char *obj);
+
 gboolean
-isreachable(GDBusConnection *connection, GError *error)
+isreachable(GDBusConnection *connection, GError *error, const char *obj)
 {
   GVariant *response = g_dbus_connection_call_sync(
     connection,
     TARGET_BUS_NAME,
-    TARGET_BUS_OBJECT,
+    obj,
     PROPERTY_BUS_INTERFACE,
     PROPERTY_BUS_METHOD,
     g_variant_new(
@@ -55,12 +60,12 @@ isreachable(GDBusConnection *connection, GError *error)
 }
 
 gint32
-getbattery(GDBusConnection *connection, GError *error)
+getbattery(GDBusConnection *connection, GError *error, const char *obj)
 {
   GVariant *response = g_dbus_connection_call_sync(
     connection,
     TARGET_BUS_NAME,
-    TARGET_BUS_OBJECT,
+    obj,
     TARGET_BUS_BATTERY_INTERFACE,
     TARGET_BUS_BATTERY,
     NULL,
@@ -84,16 +89,27 @@ getbattery(GDBusConnection *connection, GError *error)
 }
 
 void
-kdeconnectu(char *str, int sigval)
+kdeconnectu(char *str, int sigval, XrmDatabase db)
 {
+  char *type;
+  XrmValue value;
+
+  if (!XrmGetResource(db, RESOURCE_ID, RESOURCE_ID, &type, &value)) {
+    printempty(str);
+    return;
+  }
+
+  char obj[64] = TARGET_BUS_OBJECT;
+  strncat(obj, value.addr, DEVICE_ID_LENGTH);
+
   GError *error = NULL;
   GDBusConnection *connection = g_bus_get_sync(G_BUS_TYPE_SESSION, NULL, NULL);
 
-  if (connection != NULL && isreachable(connection, error)) {
-    gint32 charge = getbattery(connection, error);
+  if (connection != NULL && isreachable(connection, error, obj)) {
+    gint32 charge = getbattery(connection, error, obj);
     snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON0), "%d%%"), charge);
   } else {
-    print_empty(str);
+    printempty(str);
   }
 
   if (error != NULL)

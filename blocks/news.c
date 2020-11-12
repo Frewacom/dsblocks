@@ -8,14 +8,14 @@
 #define UNREADPATH          "/tmp/newsupdate"
 
 void
-newsu(char *str, int sigval)
+newsu(char *str, int sigval, XrmDatabase db)
 {
   int unread;
   if (readint(UNREADPATH, &unread)) {
     snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON0), "%d"), unread);
   }
   else {
-    print_empty(str);
+    printempty(str);
   }
 }
 
