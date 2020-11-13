@@ -20,10 +20,11 @@ musicu(char *str, int sigval, BlockData *blockdata)
   } else {
     struct mpd_song *song = mpd_run_current_song(blockdata->mpd);
     const char *title = mpd_song_get_tag(song, MPD_TAG_TITLE, 0);
+    const char *artist = mpd_song_get_tag(song, MPD_TAG_ARTIST, 0);
 
     switch (curstate) {
       case MPD_STATE_PAUSE:
-        snprintf(str, CMDLENGTH, BLOCK_CRITICAL(ICON(ICON0), "%s"), title);
+        snprintf(str, CMDLENGTH, BLOCK_CRITICAL(ICON(ICON0), "%s - %s"), artist, title);
         break;
       case MPD_STATE_PLAY:
         snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON0), "%s"), title);
