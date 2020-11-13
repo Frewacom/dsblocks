@@ -27,7 +27,7 @@ musicu(char *str, int sigval, BlockData *blockdata)
         snprintf(str, CMDLENGTH, BLOCK_CRITICAL(ICON(ICON0), "%s - %s"), artist, title);
         break;
       case MPD_STATE_PLAY:
-        snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON0), "%s"), title);
+        snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON0), "%s - %s"), artist, title);
         break;
       default:
         return;
