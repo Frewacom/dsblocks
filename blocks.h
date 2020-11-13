@@ -6,6 +6,7 @@
 #include "blocks/time.h"
 #include "blocks/volume.h"
 #include "blocks/kdeconnect.h"
+#include "blocks/kblayout.h"
 
 #define SLEEPINTERVAL                   1
 
@@ -25,6 +26,7 @@ static Block blocks[] = {
   {  newsu,                newsc,                  5,              6       },
   /* {  cputempu,             cputempc,               2,              6       }, */
   /* {  mailu,                mailc,                  300,            5       }, */
+  {  kblayoutu,            kblayoutc,              0,              7       },
   {  kdeconnectu,          kdeconnectc,            15,             0       },
   /* {  wifistatus,           wifistatus,             5,              0       }, */
   /* {  ethernet,             ethernet,               5,              0       }, */
