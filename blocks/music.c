@@ -13,6 +13,11 @@ musicu(char *str, int sigval, BlockData *blockdata)
   }
 
   struct mpd_status *status = mpd_recv_status(blockdata->mpd);
+
+  if (status == NULL) {
+    return;
+  }
+
   enum mpd_state curstate = mpd_status_get_state(status);
 
   if (curstate == MPD_STATE_STOP || curstate == MPD_STATE_UNKNOWN) {
