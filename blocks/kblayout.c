@@ -14,14 +14,13 @@
 void
 kblayoutu(char *str, int sigval, BlockData *blockdata)
 {
-  XkbDescRec *desc = XkbAllocKeyboard();
-  XkbGetNames(blockdata->dpy, XkbSymbolsNameMask, desc);
+  XkbDescRec *desc = XkbGetKeyboard(dpy, XkbSymbolsNameMask, XkbUseCoreKbd);
   Atom symName = desc->names->symbols;
-  char *data = XGetAtomName(dpy, symName);
+  char *symbols = XGetAtomName(dpy, symName);
 
   char layout[LAYOUT_INDEX_RANGE + 1];
-  if (strlen(data) > LAYOUT_INDEX_OFFSET + LAYOUT_INDEX_RANGE) {
-    strncpy(layout, data+LAYOUT_INDEX_OFFSET, LAYOUT_INDEX_RANGE);
+  if (symbols != NULL && strlen(symbols) > LAYOUT_INDEX_OFFSET + LAYOUT_INDEX_RANGE) {
+    strncpy(layout, symbols+LAYOUT_INDEX_OFFSET, LAYOUT_INDEX_RANGE);
 
     char *upper = layout;
     while (*upper) {
@@ -29,12 +28,17 @@ kblayoutu(char *str, int sigval, BlockData *blockdata)
       upper++;
     }
 
+    *upper = '\0';
+
     snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON0), "%s"), layout);
   }
+
+  XFree(symbols);
+  XkbFreeKeyboard(desc, XkbSymbolsNameMask, True);
 }
 
 void
-kblayoutc(int sigval)
+kblayoutc(int sigval, BlockData *blockdata)
 {
   system("switch-kb-layout");
 }

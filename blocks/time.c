@@ -15,7 +15,7 @@ timeu(char *str, int sigval, BlockData *blockdata)
 }
 
 void
-timec(int button)
+timec(int button, BlockData *blockdata)
 {
   /* TERMCMD(SHOWCALENDAR); */
 }

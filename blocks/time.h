@@ -1,2 +1,2 @@
 void timeu(char *str, int sigval, BlockData *blockdata);
-void timec(int button);
+void timec(int button, BlockData *blockdata);

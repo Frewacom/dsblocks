@@ -29,7 +29,7 @@ volumeu(char *str, int sigval, BlockData *blockdata)
 }
 
 void
-volumec(int button)
+volumec(int button, BlockData *blockdata)
 {
   csigself(1,1);
   switch(button) {

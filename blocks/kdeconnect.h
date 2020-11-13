@@ -1,2 +1,2 @@
-void kdeconnectu(char *str, int sigval, BlockData *data);
-void kdeconnectc(int button);
+void kdeconnectu(char *str, int sigval, BlockData *blockdata);
+void kdeconnectc(int button, BlockData *blockdata);

@@ -19,7 +19,7 @@
 
 typedef struct {
   void (*funcu)(char *str, int sigval, BlockData *blockdata);
-  void (*funcc)(int button);
+  void (*funcc)(int button, BlockData *blockdata);
   const int interval;
   const int signal;
   char cmdoutcur[CMDLENGTH];
@@ -61,7 +61,7 @@ buttonhandler(int signal, siginfo_t *si, void *ucontext)
           break;
         case 0:
           close(ConnectionNumber(dpy));
-          current->funcc(si->si_value.sival_int & 0xff);
+          current->funcc(si->si_value.sival_int & 0xff, &blockdata);
           exit(0);
       }
 }
@@ -320,7 +320,9 @@ loadblockdata()
 
   blockdata = (BlockData){
     .dpy = dpy,
-    .kdedbusobj = kdedbusobj != NULL ? obj : NULL
+    .kdedbusobj = kdedbusobj != NULL ? obj : NULL,
+    .dbus = g_bus_get_sync(G_BUS_TYPE_SESSION, NULL, NULL),
+    .mpd = mpd_connection_new(NULL, 0, 0)
   };
 }
 
@@ -348,6 +350,8 @@ main(int argc, char *argv[])
       sigaddset(&blocksigmask, SIGRTMIN + current->signal);
   setupsignals();
   statusloop();
+  g_object_unref(blockdata.dbus);
+  mpd_connection_free(blockdata.mpd);
   unlink(LOCKFILE);
   XStoreName(dpy, DefaultRootWindow(dpy), "");
   XCloseDisplay(dpy);

@@ -1,2 +1,2 @@
 void batteryu(char *str, int ac, BlockData *blockdata);
-void batteryc(int button);
+void batteryc(int button, BlockData *blockdata);

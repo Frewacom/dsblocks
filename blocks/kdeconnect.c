@@ -89,10 +89,9 @@ void
 kdeconnectu(char *str, int sigval, BlockData *blockdata)
 {
   GError *error = NULL;
-  GDBusConnection *connection = g_bus_get_sync(G_BUS_TYPE_SESSION, NULL, NULL);
 
-  if (connection != NULL && isreachable(connection, error, blockdata->kdedbusobj)) {
-    gint32 charge = getbattery(connection, error, blockdata->kdedbusobj);
+  if (blockdata->dbus != NULL && isreachable(blockdata->dbus, error, blockdata->kdedbusobj)) {
+    gint32 charge = getbattery(blockdata->dbus, error, blockdata->kdedbusobj);
     snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON0), "%d%%"), charge);
   } else {
     printempty(str);
@@ -100,12 +99,10 @@ kdeconnectu(char *str, int sigval, BlockData *blockdata)
 
   if (error != NULL)
     g_error_free(error);
-
-  g_object_unref(connection);
 }
 
 void
-kdeconnectc(int button)
+kdeconnectc(int button, BlockData *blockdata)
 {
 
 }

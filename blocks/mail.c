@@ -121,7 +121,7 @@ mailu(char *str, int sigval, BlockData *blockdata)
 }
 
 void
-mailc(int button)
+mailc(int button, BlockData *blockdata)
 {
   switch (button) {
     case 1:

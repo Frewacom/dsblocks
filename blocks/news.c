@@ -20,7 +20,7 @@ newsu(char *str, int sigval, BlockData *blockdata)
 }
 
 void
-newsc(int button)
+newsc(int button, BlockData *blockdata)
 {
   switch (button){
     case 1:

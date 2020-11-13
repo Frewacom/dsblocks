@@ -118,7 +118,7 @@ batteryu(char *str, int ac, BlockData *blockdata)
 }
 
 void
-batteryc(int button)
+batteryc(int button, BlockData *blockdata)
 {
   int ac;
   int cur, rate;

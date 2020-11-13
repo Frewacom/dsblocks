@@ -26,7 +26,7 @@ cputempu(char *str, int sigval, BlockData *blockdata)
 }
 
 void
-cputempc(int button)
+cputempc(int button, BlockData *blockdata)
 {
   switch (button) {
     case 1:
