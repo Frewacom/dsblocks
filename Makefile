@@ -3,8 +3,10 @@ PREFIX := /usr/local
 CC := gcc
 CFLAGS := -O3 -Wall -Wextra
 
-X11CFLAGS := $(shell pkg-config --cflags x11 gio-2.0)
-X11LIBS := $(shell pkg-config --libs x11 gio-2.0)
+DEPCFLAGS := $(shell pkg-config --cflags gio-2.0 libmpdclient)
+DEPLIBS := $(shell pkg-config --libs gio-2.0 libmpdclient)
+X11CFLAGS := $(shell pkg-config --cflags x11)
+X11LIBS := $(shell pkg-config --libs x11)
 
 BLOCKS := $(wildcard blocks/*.c)
 
@@ -17,13 +19,10 @@ util.o: util.c util.h shared.h
 	${CC} -o $@ -c ${CFLAGS} ${X11CFLAGS} $<
 
 blocks/%.o: blocks/%.c blocks/%.h util.h shared.h
-	${CC} -o $@ -c ${CFLAGS} -Wno-unused-parameter $<
-
-blocks/kdeconnect.o: blocks/kdeconnect.c blocks/kdeconnect.h util.h shared.h
-	${CC} -o $@ -c ${CFLAGS} -Wno-unused-parameter $< ${X11CFLAGS} ${X11LIBS}
+	${CC} -o $@ -c ${CFLAGS} -Wno-unused-parameter ${DEPCFLAGS} $<
 
 dsblocks: dsblocks.o util.o ${BLOCKS:c=o}
-	${CC} -o $@ $^ ${X11LIBS}
+	${CC} -o $@ $^ ${X11LIBS} ${DEPLIBS}
 
 sigdsblocks/sigdsblocks: sigdsblocks/sigdsblocks.c
 	${CC} -o $@ ${CFLAGS} $<
