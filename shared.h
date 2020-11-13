@@ -4,7 +4,7 @@
 #include <mpd/client.h>
 #include <gio/gio.h>
 
-#define CMDLENGTH                       75
+#define CMDLENGTH                       50
 #define NILL                            INT_MIN
 
 typedef struct {
