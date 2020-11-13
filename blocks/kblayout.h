@@ -1,4 +1,2 @@
-#include <X11/Xresource.h>
-
-void kblayoutu(char *str, int sigval, XrmDatabase db);
+void kblayoutu(char *str, int sigval, BlockData *blockdata);
 void kblayoutc(int button);

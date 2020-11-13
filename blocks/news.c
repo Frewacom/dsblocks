@@ -8,7 +8,7 @@
 #define UNREADPATH          "/tmp/newsupdate"
 
 void
-newsu(char *str, int sigval, XrmDatabase db)
+newsu(char *str, int sigval, BlockData *blockdata)
 {
   int unread;
   if (readint(UNREADPATH, &unread)) {

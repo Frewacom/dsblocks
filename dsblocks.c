@@ -13,8 +13,12 @@
 #define STTLENGTH                       256
 #define LOCKFILE                        "/tmp/dsblocks.pid"
 
+#define X_RESOURCE_KDE_DEVICE_ID        "kde.deviceId"
+#define KDE_DBUS_OBJECT                 "/modules/kdeconnect/devices/"
+#define KDE_DEVICE_ID_LENGTH            17
+
 typedef struct {
-  void (*funcu)(char *str, int sigval, XrmDatabase db);
+  void (*funcu)(char *str, int sigval, BlockData *blockdata);
   void (*funcc)(int button);
   const int interval;
   const int signal;
@@ -27,6 +31,8 @@ typedef struct {
 static void buttonhandler(int signal, siginfo_t *si, void *ucontext);
 static void setroot();
 static void setupsignals();
+static char *getstringresource(const char *key);
+static void loadblockdata();
 static void sighandler(int signal, siginfo_t *si, void *ucontext);
 static void statusloop();
 static void termhandler(int signum);
@@ -36,6 +42,7 @@ static void writepid();
 Display *dpy;
 pid_t pid;
 XrmDatabase db;
+BlockData blockdata;
 
 static int statuscontinue = 1;
 static char statusstr[STTLENGTH];
@@ -115,7 +122,7 @@ sighandler(int signal, siginfo_t *si, void *ucontext)
   signal -= SIGRTMIN;
   for (Block *current = blocks; current->funcu; current++)
     if (current->signal == signal)
-      current->funcu(current->cmdoutcur, si->si_value.sival_int, db);
+      current->funcu(current->cmdoutcur, si->si_value.sival_int, &blockdata);
   setroot();
 }
 
@@ -128,7 +135,7 @@ statusloop()
   sigprocmask(SIG_BLOCK, &blocksigmask, NULL);
   for (Block *current = blocks; current->funcu; current++)
     if (current->interval >= 0)
-      current->funcu(current->cmdoutcur, NILL, db);
+      current->funcu(current->cmdoutcur, NILL, &blockdata);
   setroot();
   sigprocmask(SIG_UNBLOCK, &blocksigmask, NULL);
   sleep(SLEEPINTERVAL);
@@ -138,7 +145,7 @@ statusloop()
     sigprocmask(SIG_BLOCK, &blocksigmask, NULL);
     for (Block *current = blocks; current->funcu; current++)
       if (current->interval > 0 && i % current->interval == 0)
-        current->funcu(current->cmdoutcur, NILL, db);
+        current->funcu(current->cmdoutcur, NILL, &blockdata);
     setroot();
     sigprocmask(SIG_UNBLOCK, &blocksigmask, NULL);
     sleep(SLEEPINTERVAL);
@@ -288,6 +295,35 @@ setupxresources() {
   }
 }
 
+char *
+getstringresource(const char *key)
+{
+  char *type;
+  XrmValue value;
+
+  if (!XrmGetResource(db, X_RESOURCE_KDE_DEVICE_ID, X_RESOURCE_KDE_DEVICE_ID, &type, &value)) {
+    return NULL;
+  }
+
+  return value.addr;
+}
+
+void
+loadblockdata()
+{
+  char *kdedbusobj = getstringresource(X_RESOURCE_KDE_DEVICE_ID);
+  char obj[64] = KDE_DBUS_OBJECT;
+
+  if (kdedbusobj != NULL) {
+    strncat(obj, kdedbusobj, KDE_DEVICE_ID_LENGTH);
+  }
+
+  blockdata = (BlockData){
+    .dpy = dpy,
+    .kdedbusobj = kdedbusobj != NULL ? obj : NULL
+  };
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -302,6 +338,7 @@ main(int argc, char *argv[])
     return 1;
   }
   setupxresources();
+  loadblockdata();
   sigemptyset(&blocksigmask);
   sigaddset(&blocksigmask, SIGHUP);
   sigaddset(&blocksigmask, SIGINT);

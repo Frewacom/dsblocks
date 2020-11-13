@@ -2,18 +2,15 @@
 #include <glib.h>
 #include <stdio.h>
 
-#include "kdeconnect.h"
 #include "../util.h"
+#include "kdeconnect.h"
 
 #define ICON0                           ""
-#define RESOURCE_ID                     "kde.deviceId"
-#define DEVICE_ID_LENGTH                17
 
 #define PROPERTY_BUS_INTERFACE          "org.freedesktop.DBus.Properties"
 #define PROPERTY_BUS_METHOD             "Get"
 
 #define TARGET_BUS_NAME                 "org.kde.kdeconnect"
-#define TARGET_BUS_OBJECT               "/modules/kdeconnect/devices/"
 #define TARGET_BUS_DEVICE_INTERFACE     "org.kde.kdeconnect.device"
 #define TARGET_BUS_BATTERY_INTERFACE    "org.kde.kdeconnect.device.battery"
 #define TARGET_BUS_ISREACHABLE          "isReachable"
@@ -89,24 +86,13 @@ getbattery(GDBusConnection *connection, GError *error, const char *obj)
 }
 
 void
-kdeconnectu(char *str, int sigval, XrmDatabase db)
+kdeconnectu(char *str, int sigval, BlockData *blockdata)
 {
-  char *type;
-  XrmValue value;
-
-  if (!XrmGetResource(db, RESOURCE_ID, RESOURCE_ID, &type, &value)) {
-    printempty(str);
-    return;
-  }
-
-  char obj[64] = TARGET_BUS_OBJECT;
-  strncat(obj, value.addr, DEVICE_ID_LENGTH);
-
   GError *error = NULL;
   GDBusConnection *connection = g_bus_get_sync(G_BUS_TYPE_SESSION, NULL, NULL);
 
-  if (connection != NULL && isreachable(connection, error, obj)) {
-    gint32 charge = getbattery(connection, error, obj);
+  if (connection != NULL && isreachable(connection, error, blockdata->kdedbusobj)) {
+    gint32 charge = getbattery(connection, error, blockdata->kdedbusobj);
     snprintf(str, CMDLENGTH, BLOCK_NORM(ICON(ICON0), "%d%%"), charge);
   } else {
     printempty(str);

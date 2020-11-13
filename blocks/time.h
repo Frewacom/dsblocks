@@ -1,4 +1,2 @@
-#include <X11/Xresource.h>
-
-void timeu(char *str, int sigval, XrmDatabase db);
+void timeu(char *str, int sigval, BlockData *blockdata);
 void timec(int button);

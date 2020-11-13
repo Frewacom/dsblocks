@@ -1,4 +1,2 @@
-#include <X11/Xresource.h>
-
-void musicu(char *str, int sigval, XrmDatabase db);
+void musicu(char *str, int sigval, BlockData *blockdata);
 void musicc(int button);

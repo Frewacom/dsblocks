@@ -1,4 +1,2 @@
-#include <X11/Xresource.h>
-
-void newsu(char *str, int sigval, XrmDatabase db);
+void newsu(char *str, int sigval, BlockData *blockdata);
 void newsc(int button);

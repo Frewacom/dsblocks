@@ -1,4 +1,2 @@
-#include <X11/Xresource.h>
-
-void mailu(char *str, int sigval, XrmDatabase db);
+void mailu(char *str, int sigval, BlockData *blockdata);
 void mailc(int button);

@@ -11,7 +11,7 @@
 #define CPUTEMPFILE                     "/sys/class/thermal/thermal_zone0/temp"
 
 void
-cputempu(char *str, int sigval, XrmDatabase db)
+cputempu(char *str, int sigval, BlockData *blockdata)
 {
   int temp;
 

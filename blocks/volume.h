@@ -1,4 +1,2 @@
-#include <X11/Xresource.h>
-
-void volumeu(char *str, int sigval, XrmDatabase db);
+void volumeu(char *str, int sigval, BlockData *blockdata);
 void volumec(int button);

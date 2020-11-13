@@ -12,18 +12,12 @@
 #define LAYOUT_INDEX_RANGE                2
 
 void
-kblayoutu(char *str, int sigval, XrmDatabase db)
+kblayoutu(char *str, int sigval, BlockData *blockdata)
 {
-  Display* dpy;
-  char* displayName = "";
-  dpy = XOpenDisplay(displayName);
-
-  XkbDescRec* desc = XkbAllocKeyboard();
-  XkbGetNames(dpy, XkbSymbolsNameMask, desc);
-  Atom symName = desc -> names -> symbols;
-  char* data = XGetAtomName(dpy, symName);
-
-  XCloseDisplay(dpy);
+  XkbDescRec *desc = XkbAllocKeyboard();
+  XkbGetNames(blockdata->dpy, XkbSymbolsNameMask, desc);
+  Atom symName = desc->names->symbols;
+  char *data = XGetAtomName(dpy, symName);
 
   char layout[LAYOUT_INDEX_RANGE + 1];
   if (strlen(data) > LAYOUT_INDEX_OFFSET + LAYOUT_INDEX_RANGE) {

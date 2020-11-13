@@ -1,4 +1,2 @@
-#include <X11/Xresource.h>
-
-void cputempu(char *str, int sigval, XrmDatabase db);
+void cputempu(char *str, int sigval, BlockData *blockdata);
 void cputempc(int button);

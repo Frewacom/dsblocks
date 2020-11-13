@@ -17,7 +17,7 @@
 #define TOGGLEMUTE                      (char *[]){ "/usr/bin/pamixer", "--toggle-mute", NULL }
 
 void
-volumeu(char *str, int sigval, XrmDatabase db)
+volumeu(char *str, int sigval, BlockData *blockdata)
 {
   char buf[BUFLENGTH];
 

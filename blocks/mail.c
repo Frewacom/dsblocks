@@ -32,7 +32,7 @@ numnewmails()
 }
 
 void
-mailu(char *str, int sigval, XrmDatabase db)
+mailu(char *str, int sigval, BlockData *blockdata)
 {
   static int n;
   static int frozen;

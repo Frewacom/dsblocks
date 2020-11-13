@@ -6,7 +6,7 @@
 /* #define SHOWCALENDAR */
 
 void
-timeu(char *str, int sigval, XrmDatabase db)
+timeu(char *str, int sigval, BlockData *blockdata)
 {
   time_t t = time(NULL);
   struct tm tm = *localtime(&t);

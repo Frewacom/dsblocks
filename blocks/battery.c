@@ -36,7 +36,7 @@
 enum { Normal, Critical, Low, Plug, Unplug }; /* battery level */
 
 void
-batteryu(char *str, int ac, XrmDatabase db)
+batteryu(char *str, int ac, BlockData *blockdata)
 {
   static int level = Normal;
   int bat;

@@ -6,3 +6,8 @@
 
 extern Display *dpy;
 extern pid_t pid;
+
+typedef struct {
+  Display *dpy;
+  char *kdedbusobj;
+} BlockData;
