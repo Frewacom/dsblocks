@@ -12,6 +12,7 @@ typedef struct {
   Display *dpy;
   char *kdedbusobj;
   struct mpd_connection *mpd;
+  enum mpd_state mpdstate;
   GDBusConnection *dbus;
 } BlockData;
 

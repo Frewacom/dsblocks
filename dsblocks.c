@@ -323,7 +323,8 @@ loadblockdata()
     .dpy = dpy,
     .kdedbusobj = kdedbusobj != NULL ? obj : NULL,
     .dbus = createdbusconnection(),
-    .mpd = creatempdconnection()
+    .mpd = creatempdconnection(),
+    .mpdstate = -1,
   };
 }
 
