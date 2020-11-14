@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "../util.h"
 #include "news.h"
 
@@ -18,11 +19,18 @@ newsu(char *str, int sigval, BlockData *blockdata)
   char buf[BUFLENGTH];
   buf[getcmdout(NEWSBOATRELOAD, buf, BUFLENGTH) - 1] = '\0';
   char *unread = strtok(buf, " ");
-  if (strcmp(unread, "0")) {
-    snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON0), "%s"), unread);
-  } else {
-    printempty(str);
+
+  char *cursor = unread;
+  while (*cursor) {
+    if (!isdigit(*cursor))
+      return;
+    cursor++;
   }
+
+  if (strcmp(unread, "0"))
+    snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON0), "%s"), unread);
+  else
+    printempty(str);
 }
 
 void
