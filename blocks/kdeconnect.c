@@ -88,6 +88,13 @@ getbattery(GDBusConnection *connection, GError *error, const char *obj)
 void
 kdeconnectu(char *str, int sigval, BlockData *blockdata)
 {
+  if (blockdata->dbus == NULL) {
+    blockdata->dbus = createdbusconnection();
+
+    if (blockdata->dbus == NULL)
+      return;
+  }
+
   GError *error = NULL;
 
   if (blockdata->dbus != NULL && isreachable(blockdata->dbus, error, blockdata->kdedbusobj)) {

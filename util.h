@@ -1,4 +1,6 @@
 #include <X11/Xresource.h>
+#include <gio/gio.h>
+#include <mpd/client.h>
 #include "shared.h"
 
 #define COL_NORM                        "\x0b"
@@ -21,6 +23,8 @@
 #define TERMCMD(cmd)                    cspawn((char *[]){ "/usr/bin/st", "-e", cmd, NULL })
 
 void printempty(char *str);
+struct mpd_connection *creatempdconnection();
+GDBusConnection *createdbusconnection();
 void cspawn(char *const *arg);
 void csigself(int signal, int sigval);
 ssize_t getcmdout(char *const *arg, char *cmdout, size_t cmdoutlen);

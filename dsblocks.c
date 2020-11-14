@@ -9,6 +9,7 @@
 #include <X11/Xresource.h>
 
 #include "shared.h"
+#include "util.h"
 
 #define STTLENGTH                       256
 #define LOCKFILE                        "/tmp/dsblocks.pid"
@@ -321,8 +322,8 @@ loadblockdata()
   blockdata = (BlockData){
     .dpy = dpy,
     .kdedbusobj = kdedbusobj != NULL ? obj : NULL,
-    .dbus = g_bus_get_sync(G_BUS_TYPE_SESSION, NULL, NULL),
-    .mpd = mpd_connection_new(NULL, 0, 0)
+    .dbus = createdbusconnection(),
+    .mpd = creatempdconnection()
   };
 }
 

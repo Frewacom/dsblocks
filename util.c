@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <mpd/client.h>
+#include <gio/gio.h>
 
 #include "util.h"
 
@@ -9,6 +11,25 @@ void
 printempty(char *str)
 {
   *str = '\0';
+}
+
+struct mpd_connection *
+creatempdconnection()
+{
+  struct mpd_connection *connection = mpd_connection_new(NULL, 0, 0);
+  if (connection == NULL || mpd_connection_get_error(connection) != MPD_ERROR_SUCCESS) {
+    fprintf(stderr, "mpd: failed to create connection\n");
+    return NULL;
+  }
+
+  mpd_connection_set_keepalive(connection, true);
+  return connection;
+}
+
+GDBusConnection *
+createdbusconnection()
+{
+  return g_bus_get_sync(G_BUS_TYPE_SESSION, NULL, NULL);
 }
 
 void
