@@ -23,7 +23,7 @@
 static Block blocks[] = {
   /* funcu                 funcc                   interval        signal */
   {  musicu,                musicc,                0,              9       },
-  {  newsu,                newsc,                  45,             6       },
+  {  newsu,                newsc,                  0,              6       },
   /* {  cputempu,             cputempc,               2,              6       }, */
   /* {  mailu,                mailc,                  300,            5       }, */
   {  kblayoutu,            kblayoutc,              0,              7       },

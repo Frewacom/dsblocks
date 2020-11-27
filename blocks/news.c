@@ -11,26 +11,21 @@
                                         "-x", "reload", \
                                         "-x", "print-unread", \
                                         NULL }
+
+/* bash script (newsup) reloads newsboat with cron and echoes unreads to this file */
+#define UPDATEDIR           "/tmp/newsupdate"
 #define BUFLENGTH           5
 
 void
 newsu(char *str, int sigval, BlockData *blockdata)
 {
-  char buf[BUFLENGTH];
-  buf[getcmdout(NEWSBOATRELOAD, buf, BUFLENGTH) - 1] = '\0';
-  char *unread = strtok(buf, " ");
-
-  char *cursor = unread;
-  while (*cursor) {
-    if (!isdigit(*cursor))
-      return;
-    cursor++;
-  }
-
-  if (strcmp(unread, "0"))
-    snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON0), "%s"), unread);
-  else
+  int unread;
+  readint(UPDATEDIR, &unread);
+  if (unread > 0) {
+    snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON0), "%d"), unread);
+  } else {
     printempty(str);
+  }
 }
 
 void
