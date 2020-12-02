@@ -20,8 +20,7 @@ void
 newsu(char *str, int sigval, BlockData *blockdata)
 {
   int unread;
-  readint(UPDATEDIR, &unread);
-  if (unread > 0) {
+  if (readint(UPDATEDIR, &unread) && unread > 0) {
     snprintf(str, CMDLENGTH, BLOCK_SUCCESS(ICON(ICON0), "%d"), unread);
   } else {
     printempty(str);
