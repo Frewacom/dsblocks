@@ -11,6 +11,8 @@
 #define LAYOUT_INDEX_OFFSET               3
 #define LAYOUT_INDEX_RANGE                2
 
+#define TOGGLELAYOUT                      "set-kb-layout toggle"
+
 void
 kblayoutu(char *str, int sigval, BlockData *blockdata)
 {
@@ -40,5 +42,5 @@ kblayoutu(char *str, int sigval, BlockData *blockdata)
 void
 kblayoutc(int sigval, BlockData *blockdata)
 {
-  system("switch-kb-layout");
+  system(TOGGLELAYOUT);
 }
