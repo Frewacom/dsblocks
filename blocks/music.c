@@ -13,6 +13,11 @@ unsigned int
 isconnected(BlockData *blockdata)
 {
   struct mpd_connection *connection = blockdata->mpd;
+
+  if (!connection) {
+    return 0;
+  }
+
   enum mpd_error error = mpd_connection_get_error(connection);
   if (connection == NULL) {
     blockdata->mpd = creatempdconnection();
