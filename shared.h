@@ -10,7 +10,8 @@
 
 typedef struct {
   Display *dpy;
-  char *kdedbusobj;
+  char *batteryobj;
+  char *reachableobj;
   struct mpd_connection *mpd;
   enum mpd_state mpdstate;
   GDBusConnection *dbus;

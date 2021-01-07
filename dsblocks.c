@@ -15,7 +15,6 @@
 #define LOCKFILE                        "/tmp/dsblocks.pid"
 
 #define X_RESOURCE_KDE_DEVICE_ID        "kde.deviceId"
-#define KDE_DBUS_OBJECT                 "/modules/kdeconnect/devices/"
 #define KDE_DEVICE_ID_LENGTH            17
 
 typedef struct {
@@ -313,15 +312,18 @@ void
 loadblockdata()
 {
   char *kdedbusobj = getstringresource(X_RESOURCE_KDE_DEVICE_ID);
-  char obj[64] = KDE_DBUS_OBJECT;
+  char batteryobj[64];
+  char reachableobj[64];
 
   if (kdedbusobj != NULL) {
-    strncat(obj, kdedbusobj, KDE_DEVICE_ID_LENGTH);
+    snprintf(reachableobj, 64, "/modules/kdeconnect/devices/%s", kdedbusobj);
+    snprintf(batteryobj, 64, "/modules/kdeconnect/devices/%s/battery", kdedbusobj);
   }
 
   blockdata = (BlockData){
     .dpy = dpy,
-    .kdedbusobj = kdedbusobj != NULL ? obj : NULL,
+    .batteryobj = kdedbusobj != NULL ? batteryobj : NULL,
+    .reachableobj = kdedbusobj != NULL ? reachableobj : NULL,
     .dbus = createdbusconnection(),
     .mpd = creatempdconnection(),
     .mpdstate = -1,
