@@ -16,10 +16,10 @@ dsblocks.o: dsblocks.c blocks.h shared.h
 	${CC} -o $@ -c ${CFLAGS} -Wno-missing-field-initializers -Wno-unused-parameter ${X11CFLAGS} ${DEPCFLAGS} $<
 
 util.o: util.c util.h shared.h
-	${CC} -o $@ -c ${CFLAGS} ${X11CFLAGS} ${DEPCFLAGS} $<
+	${CC} -o $@ -c ${CFLAGS} ${X11CFLAGS} ${DEPCFLAGS} $< ${DEPLIBS} ${X11LIBS}
 
 blocks/%.o: blocks/%.c blocks/%.h util.h shared.h
-	${CC} -o $@ -c ${CFLAGS} -Wno-unused-parameter ${DEPCFLAGS} ${X11CFLAGS} $< 
+	${CC} -o $@ -c ${CFLAGS} -Wno-unused-parameter ${DEPCFLAGS} ${X11CFLAGS} $< ${DEPLIBS} ${X11LIBS}
 
 dsblocks: dsblocks.o util.o ${BLOCKS:c=o}
 	${CC} -o $@ $^ ${X11LIBS} ${DEPLIBS}
