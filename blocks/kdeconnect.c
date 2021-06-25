@@ -134,6 +134,9 @@ getcharging(GDBusConnection *connection, GError *error, const char *obj)
 void
 kdeconnectu(char *str, int sigval, BlockData *blockdata)
 {
+  if (blockdata->reachableobj == NULL)
+    return;
+
   if (blockdata->dbus == NULL) {
     blockdata->dbus = createdbusconnection();
 
