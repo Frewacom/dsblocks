@@ -19,13 +19,13 @@ util.o: util.c util.h shared.h
 	${CC} -o $@ -c ${CFLAGS} ${X11CFLAGS} ${DEPCFLAGS} $<
 
 blocks/%.o: blocks/%.c blocks/%.h util.h shared.h
-	${CC} -o $@ -c ${CFLAGS} -Wno-unused-parameter ${DEPCFLAGS} $<
+	${CC} -o $@ -c ${CFLAGS} -Wno-unused-parameter ${DEPCFLAGS} ${X11CFLAGS} $< 
 
 dsblocks: dsblocks.o util.o ${BLOCKS:c=o}
 	${CC} -o $@ $^ ${X11LIBS} ${DEPLIBS}
 
 sigdsblocks/sigdsblocks: sigdsblocks/sigdsblocks.c
-	${CC} -o $@ ${CFLAGS} $<
+	${CC} -o $@ ${CFLAGS} ${X11CFLAGS} $< ${X11LIBS}
 
 xgetrootname/xgetrootname: xgetrootname/xgetrootname.c
 	${CC} -o $@ ${CFLAGS} ${X11CFLAGS} $< ${X11LIBS}
